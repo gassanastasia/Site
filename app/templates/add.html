@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Публикация новости</h1>
+    <div class="col-8">
+    <form method="POST">
+        <div class="form-group">
+            <label for="name" class="form-label">Заголовок:</label>
+            <input type="text" class="form-control" id="title" name="titlename" required>
+        </div>
+        <div class="form-group"></div>
+            <label for="name" class="form-label">Текст:</label>
+            <textarea type="text" id="content" class="form-control" name="content" rows="5" required></textarea>
+        </div>
+        <div class="form-group"></div>
+            <label for="name">Автор:</label>
+            <input type="text" id="nameautor" class="form-control" name="avtor">
+            <input type="checkbox"  onclick="SetNameAutor('{{user.username}}')">© своё авторство
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Категория</label>
+            <select class="form-select" id="category" name="category" required>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="tags" class="form-label">Теги</label>
+            <select class="form-select" id="tags" name="tags" multiple>
+              {% for tag in tags %}
+                <option value="{{ tag.id }}">{{ tag.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+    </form>
+</div>
+<script>
+  var hasAutorName = false;
+
+  function SetNameAutor(name){
+    let input =  document.getElementById("nameautor");
+    if (hasAutorName){
+      input.value = "";
+    }
+    else{
+      input.value = name;
+    }
+    hasAutorName = !hasAutorName;
+    
+  }
+</script>
+{% endblock %}
